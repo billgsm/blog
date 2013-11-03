@@ -1,3 +1,11 @@
-sdz_blog_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: SdzBlogBundle:Default:index }
+#sdz_blog_homepage:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: SdzBlogBundle:Default:index }
+
+HelloTheWorld:
+    pattern: /hello-world
+    defaults: { _controller: SdzBlogBundle:Blog:index }
+
+ByeTheWorld:
+    pattern: /bye-world
+    defaults: { _controller: SdzBlogBundle:Blog:index_bye }

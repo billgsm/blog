@@ -14,8 +14,15 @@ class BlogController extends Controller
         return $this->render('SdzBlogBundle:Blog:index.html.twig');
     }
 
-    public function index_byeAction()
+    public function voirAction($id)
     {
-        return $this->render('SdzBlogBundle:Blog:index_bye.html.twig');
+        return new Response('Affichage de l\'article d\'id: '.$id);
+        //return $this->render('SdzBlogBundle:Blog:index_bye.html.twig');
+    }
+
+    public function voirSlugAction($slug, $annee, $format)
+    {
+        return new Response('slug -> '.$slug.' : annee -> '.$annee.' : format -> '.$format);
+        //return $this->render('SdzBlogBundle:Blog:index_bye.html.twig');
     }
 }

@@ -9,20 +9,32 @@ class BlogController extends Controller
 {
     public function indexAction()
     {
-        // Simple response containing characters
-        //return new response("<h1>Hello World</h1>");
         return $this->render('SdzBlogBundle:Blog:index.html.twig');
     }
 
     public function voirAction($id)
     {
-        return new Response('Affichage de l\'article d\'id: '.$id);
-        //return $this->render('SdzBlogBundle:Blog:index_bye.html.twig');
+        /**
+         * How to send a mail
+         */
+        $mailer = $this->get('mailer');
+        $message = \Swift_Message::newInstance()
+          ->setSubject('Hello zéro !')
+          ->setFrom('tutoriel@symfony.com')
+          ->setTo('ga_bilou@hotmail.com')
+          ->setBody('Coucou, voici un email que vous venez de recevoir !');
+
+        $mailer->send($message);
+        return new Response('Email successfully sent');
+        //FIN-------------------
+
+        //return $this->redirect( $this->generateUrl('sdzblog_accueil', array('page' => 2)) );
+        $request = $this->getRequest();
+        return $this->render('SdzBlogBundle:Blog:voir.html.twig', array('id' => $id));
     }
 
     public function voirSlugAction($slug, $annee, $format)
     {
         return new Response('slug -> '.$slug.' : annee -> '.$annee.' : format -> '.$format);
-        //return $this->render('SdzBlogBundle:Blog:index_bye.html.twig');
     }
 }

@@ -2,15 +2,14 @@
 
 <html>
   <head>
-    <title>Bienvenue sur ma première page</title>
+    <title>Voir page {{ id }}</title>
   </head>
   <body>
-    <h1>Hello world!</h1>
+    <h1>Reading article: {{ id }}</h1>
     <p>
       Le Hello World est un grand classique en programmation.
       Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
       une tâche simple.
-      <a href="{{ path('sdzblog_voir', {'id': 5 }) }}">lien vers l'article numèro 5</a>
     </p>
   </body>
 </html>

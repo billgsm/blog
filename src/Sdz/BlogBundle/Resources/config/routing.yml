@@ -1,32 +1,25 @@
-sdzblog_accueil:
+sdzblog_index:
     pattern: /{page}
     defaults: { _controller: SdzBlogBundle:Blog:index, page: 1 }
     requirements:
         page: \d*
 
-sdzblog_voir:
+sdzblog_see:
     pattern: /article/{id}
-    defaults: { _controller: SdzBlogBundle:Blog:voir }
+    defaults: { _controller: SdzBlogBundle:Blog:see }
 
-sdzblog_ajouter:
-    pattern: /ajouter
-    defaults: { _controller: SdzBlogBundle:Blog:ajouter }
+sdzblog_add:
+    pattern: /add
+    defaults: { _controller: SdzBlogBundle:Blog:add }
 
-sdzblog_modifier:
-    pattern: /modifier/{id}
-    defaults: { _controller: SdzBlogBundle:Blog:modifier }
+sdzblog_modify:
+    pattern: /modify/{id}
+    defaults: { _controller: SdzBlogBundle:Blog:modify }
     requirements:
         id: \d+
 
-sdzblog_supprimer:
-    pattern: /supprimer/{id}
-    defaults: { _controller: SdzBlogBundle:Blog:supprimer }
+sdzblog_delete:
+    pattern: /delete/{id}
+    defaults: { _controller: SdzBlogBundle:Blog:delete }
     requirements:
         id: \d+
-
-sdzblog_voir_slug:
-    pattern: /{annee}/{slug}.{format}
-    defaults: { _controller: SdzBlogBundle:Blog:voirSlug, format: html }
-    requirements:
-        annee: \d{4}
-        format: html|xml

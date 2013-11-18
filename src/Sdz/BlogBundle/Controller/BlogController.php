@@ -7,16 +7,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
-    public function indexAction()
+    public function indexAction($page)
     {
-        return $this->render('SdzBlogBundle:Blog:index.html.twig');
+      if( $page < 1) {
+        throw $this->createNotFoundException('Page not found (page = '.$page.')');
+      }
+      return $this->render('SdzBlogBundle:Blog:index.html.twig');
     }
 
-    public function voirAction($id)
+    public function seeAction($id)
     {
         /**
          * How to send a mail
          */
+        // $this->get('service_name')
+        /*
         $mailer = $this->get('mailer');
         $message = \Swift_Message::newInstance()
           ->setSubject('Hello zéro !')
@@ -25,16 +30,34 @@ class BlogController extends Controller
           ->setBody('Coucou, voici un email que vous venez de recevoir !');
 
         $mailer->send($message);
-        return new Response('Email successfully sent');
+        return new Response('Email successfully sent');*/
         //FIN-------------------
 
         //return $this->redirect( $this->generateUrl('sdzblog_accueil', array('page' => 2)) );
-        $request = $this->getRequest();
-        return $this->render('SdzBlogBundle:Blog:voir.html.twig', array('id' => $id));
+        //$request = $this->getRequest();
+      return $this->render('SdzBlogBundle:Blog:see.html.twig', array(
+        'id' => $id
+      ));
     }
 
-    public function voirSlugAction($slug, $annee, $format)
+    public function addAction($slug, $annee, $format)
     {
-        return new Response('slug -> '.$slug.' : annee -> '.$annee.' : format -> '.$format);
+      if( $this->get('request')->getMethod() == 'POST' ) {
+        $this->get('session')->getFlashBag()->add('notice', 'article saved');
+        return $this->redirect( $this->generateUrl('sdzblog_voir', array('id' => 5)) );
+      }
+      return $this->render('SdzBlogBundle:Blog:add.html.twig');
+    }
+
+    public function modifyAction($id)
+    {
+      return $this->render('SdzBlogBundle:Blog:modify.html.twig');
+    }
+
+    public function deleteAction($id)
+    {
+      return $this->render('SdzBlogBundle:Blog:delete.html.twig', array(
+        'id' => $id
+        ));
     }
 }

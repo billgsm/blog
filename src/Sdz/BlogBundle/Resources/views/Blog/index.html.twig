@@ -4,12 +4,19 @@
 
 {% block title %}{{ parent() }} - Index{% endblock %}
 
-{% block body %}
-<h1>Hello world!</h1>
-<p>
-  Le Hello World est un grand classique en programmation.
-  Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
-  une tâche simple.
-  <a href="{{ path('sdzblog_see', {'id': 5 }) }}">lien vers l'article numèro 5</a>
-</p>
+{% block sdzblog_body %}
+
+    <h2>Article list</h2>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{{ path('sdzblog_see', {'id': article.id}) }}">{{ article.title }}</a>
+                by {{ article.author }},
+                in {{ article.date|date('d/m/Y') }}
+            </li>
+        {% else %}
+            <li>No articles</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

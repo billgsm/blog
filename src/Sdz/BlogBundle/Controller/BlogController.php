@@ -12,7 +12,34 @@ class BlogController extends Controller
       if( $page < 1) {
         throw $this->createNotFoundException('Page not found (page = '.$page.')');
       }
-      return $this->render('SdzBlogBundle:Blog:index.html.twig');
+      
+      $articles = array(
+        array(
+          'id'      => 1,
+          'title'   => 'My weekend at Phi Island !',
+          'author'  => 'winzou',
+          'content' => 'This weekend was good. Blabla...',
+          'date'    => new \Datetime(),
+        ),
+        array(
+          'id'      => 2,
+          'title'   => 'Singapor national day repetition',
+          'author'  => 'winzou',
+          'content' => 'will be ready for the day j soooooooooon.',
+          'date'    => new \Datetime(),
+        ),
+        array(
+          'id'      => 3,
+          'title'   => 'revenus up',
+          'author'  => 'winzou',
+          'content' => '+500% over a year',
+          'date'    => new \Datetime(),
+        ),
+      );
+
+      return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
+        'articles' => $articles,
+      ));
     }
 
     public function seeAction($id)
@@ -35,9 +62,16 @@ class BlogController extends Controller
 
         //return $this->redirect( $this->generateUrl('sdzblog_accueil', array('page' => 2)) );
         //$request = $this->getRequest();
-      return $this->render('SdzBlogBundle:Blog:see.html.twig', array(
-        'id' => $id
-      ));
+        $article = array(
+          'id'      => 3,
+          'title'   => 'revenus up',
+          'author'  => 'winzou',
+          'content' => '+500% over a year',
+          'date'    => new \Datetime(),
+        );
+        return $this->render('SdzBlogBundle:Blog:see.html.twig', array(
+          'article' => $article,
+        ));
     }
 
     public function addAction()
@@ -47,7 +81,16 @@ class BlogController extends Controller
 
     public function modifyAction($id)
     {
-      return $this->render('SdzBlogBundle:Blog:modify.html.twig');
+        $article = array(
+          'id'      => 3,
+          'title'   => 'revenus up',
+          'author'  => 'winzou',
+          'content' => '+500% over a year',
+          'date'    => new \Datetime(),
+        );
+        return $this->render('SdzBlogBundle:Blog:modify.html.twig', array(
+          'article' => $article,
+        ));
     }
 
     public function deleteAction($id)

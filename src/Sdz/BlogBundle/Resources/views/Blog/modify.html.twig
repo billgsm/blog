@@ -1,17 +1,19 @@
-{# src/Sdz/BlogBundle/Ressources/views/Blog/add.html.twig #}
+{# src/Sdz/BlogBundle/Ressources/views/Blog/modify.html.twig #}
 
 {% extends "SdzBlogBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Adding an article{% endblock %}
+{% block title %}{{ parent() }} - Modifying an article{% endblock %}
 
 {% block sdzblog_body %}
 
-    <h2>Adding an article</h2>
+    <h2>Modify an article</h2>
 
     {% include "SdzBlogBundle:Blog:form.html.twig" %}
 
     <p>
-        You're adding a new article
+        Your are editing an existing article,
+        it shouldn't be edited too much in order
+        to avoid losting members.
     </p>
 
     <p>

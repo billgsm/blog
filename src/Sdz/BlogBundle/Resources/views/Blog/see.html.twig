@@ -1,15 +1,31 @@
-{# src/Sdz/BlogBundle/Ressources/views/Blog/index.html.twig #}
+{# src/Sdz/BlogBundle/Ressources/views/Blog/see.html.twig #}
 
-<html>
-  <head>
-    <title>Voir page {{ id }}</title>
-  </head>
-  <body>
-    <h1>Reading article: {{ id }}</h1>
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - article reading{% endblock %}
+
+{% block sdzblog_body %}
+
+    <h2>{{ article.title }}</h2>
+    <i>By {{ article.author }}, the {{ article.date|date('d/m/Y') }}</i>
+
+    <div class='well'>
+        {{ article.content }}
+    </div> {# div.well #}
+
     <p>
-      Le Hello World est un grand classique en programmation.
-      Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
-      une tâche simple.
+        <a href="{{ path('sdzblog_index') }}" class='btn'>
+            <i class='icon-chevron-left'></i>
+            Back to the list
+        </a>
+        <a href="{{ path('sdzblog_modify', {'id': article.id}) }}" class='btn'>
+            <i class='icon-edit'></i>
+            Edit this article
+        </a>
+        <a href="{{ path('sdzblog_delete', {'id': article.id}) }}" class='btn'>
+            <i class='icon-trash'></i>
+            Delete this article
+        </a>
     </p>
-  </body>
-</html>
+
+{% endblock %}

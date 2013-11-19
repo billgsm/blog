@@ -7,6 +7,8 @@ sdzblog_index:
 sdzblog_see:
     pattern: /article/{id}
     defaults: { _controller: SdzBlogBundle:Blog:see }
+    requirements:
+        id: \d+
 
 sdzblog_add:
     pattern: /add

@@ -40,12 +40,8 @@ class BlogController extends Controller
       ));
     }
 
-    public function addAction($slug, $annee, $format)
+    public function addAction()
     {
-      if( $this->get('request')->getMethod() == 'POST' ) {
-        $this->get('session')->getFlashBag()->add('notice', 'article saved');
-        return $this->redirect( $this->generateUrl('sdzblog_voir', array('id' => 5)) );
-      }
       return $this->render('SdzBlogBundle:Blog:add.html.twig');
     }
 
@@ -57,7 +53,20 @@ class BlogController extends Controller
     public function deleteAction($id)
     {
       return $this->render('SdzBlogBundle:Blog:delete.html.twig', array(
-        'id' => $id
+        'id' => $id,
+        'name' => '<h2>bilel</h2>',
         ));
+    }
+
+    public function menuAction()
+    {
+      $list = array(
+        array('id' => 2, 'title' => 'My last weekend!'),
+        array('id' => 5, 'title' => 'Release of Symfony2.1'),
+        array('id' => 9, 'title' => 'Small test'),
+      );
+      return $this->render("SdzBlogBundle:Blog:menu.html.twig", array(
+        'article_list' => $list,
+      ));
     }
 }

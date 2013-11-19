@@ -1,0 +1,14 @@
+{# src/Sdz/BlogBundle/Ressources/views/Blog/add.html.twig #}
+
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block body %}
+
+  <h2>Add an article</h2>
+
+  {% include "SdzBlogBundle:Blog:form.html.twig" %}
+
+  <p>
+    Attention: this article will be added directly on the index page after the form validation
+  </p>
+{% endblock %}

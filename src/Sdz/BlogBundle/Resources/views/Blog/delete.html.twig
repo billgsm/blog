@@ -5,8 +5,9 @@
     <title>deleting page {{ id }}</title>
   </head>
   <body>
-    <h1>deleting article: {{ id }}</h1>
+    <h1>deleting article: {{ name|raw }}</h1>
     <p>
+    <strong>{{ app.user }}</strong>
       Le Hello World est un grand classique en programmation.
       Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
       une tâche simple.

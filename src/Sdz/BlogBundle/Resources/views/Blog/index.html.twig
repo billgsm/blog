@@ -1,16 +1,15 @@
-{# src/Sdz/BlogBundle/Ressources/views/Default/index.html.twig #}
+{# src/Sdz/BlogBundle/Ressources/views/Blog/index.html.twig #}
 
-<html>
-  <head>
-    <title>Bienvenue sur ma première page</title>
-  </head>
-  <body>
-    <h1>Hello world!</h1>
-    <p>
-      Le Hello World est un grand classique en programmation.
-      Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
-      une tâche simple.
-      <a href="{{ path('sdzblog_see', {'id': 5 }) }}">lien vers l'article numèro 5</a>
-    </p>
-  </body>
-</html>
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block body %}
+<h1>Hello world!</h1>
+<p>
+  Le Hello World est un grand classique en programmation.
+  Il signifie énormément, car cela veut dire que vous avez réussi à exécuter le programme pour accomplir
+  une tâche simple.
+  <a href="{{ path('sdzblog_see', {'id': 5 }) }}">lien vers l'article numèro 5</a>
+</p>
+{% endblock %}

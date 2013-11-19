@@ -9,6 +9,12 @@ class BlogController extends Controller
 {
     public function indexAction($page)
     {
+
+        $antispam = $this->get('sdz_blog.antispam');
+        $text = "test@test.fr, test@test.fr, test@test.fr";
+        if ($antispam->isSpam($text)) {
+            throw new \Exception('Your message has been detected as a spam !');
+        }
       if( $page < 1) {
         throw $this->createNotFoundException('Page not found (page = '.$page.')');
       }

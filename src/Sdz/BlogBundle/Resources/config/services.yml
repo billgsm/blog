@@ -2,6 +2,7 @@ parameters:
 #    sdz_blog.example.class: Sdz\BlogBundle\Example
 
 services:
-#    sdz_blog.example:
-#        class: %sdz_blog.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    # Convention: applicationName_bundleName.service
+    sdz_blog.antispam:
+        class: Sdz\BlogBundle\Antispam\SdzAntispam
+        arguments: [@mailer, %locale%, 4]

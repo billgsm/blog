@@ -4,6 +4,7 @@ namespace Sdz\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Sdz\BlogBundle\Entity\Article;
 
 class BlogController extends Controller
 {
@@ -66,15 +67,17 @@ class BlogController extends Controller
         return new Response('Email successfully sent');*/
         //FIN-------------------
 
-        //return $this->redirect( $this->generateUrl('sdzblog_accueil', array('page' => 2)) );
         //$request = $this->getRequest();
-        $article = array(
-          'id'      => 3,
-          'title'   => 'revenus up',
-          'author'  => 'winzou',
-          'content' => '+500% over a year',
-          'date'    => new \Datetime(),
-        );
+        
+        $repository = $this->getDoctrine()
+                           ->getManager()
+                           ->getRepository('SdzBlogBundle:Article');
+
+        $article = $repository->find($id);
+        if( $article === null ) {
+            throw $this->createNotFoundException('Article[id='.$id.'] does not exist.');
+        }
+
         return $this->render('SdzBlogBundle:Blog:see.html.twig', array(
           'article' => $article,
         ));
@@ -82,7 +85,25 @@ class BlogController extends Controller
 
     public function addAction()
     {
-      return $this->render('SdzBlogBundle:Blog:add.html.twig');
+        $article = new Article();
+        $article->setTitle('Mon dernier weekend');
+        $article->setAuthor('Bibi');
+        $article->setContent("it was really cool and we had fun.");
+
+        // Get the EntityManager
+        $em = $this->getDoctrine()->getManager();
+
+        // Persist the entity
+        $em->persist($article);
+
+        // Flush all what has been persisted before
+        $em->flush();
+
+        if ($this->getRequest()->getMethod() == "POST") {
+            $this->get('session')->getFlashBag()->add('info', 'Article has been saved');
+            return $this->redirect( $this->generateUrl('sdzblog_see', array('id' => $article->getId())) );
+        }
+        return $this->render('SdzBlogBundle:Blog:add.html.twig');
     }
 
     public function modifyAction($id)

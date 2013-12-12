@@ -4,28 +4,40 @@
 
 {% block title %}{{ parent() }} - article reading{% endblock %}
 
+
+
 {% block sdzblog_body %}
 
-    <h2>{{ article.title }}</h2>
-    <i>By {{ article.author }}, the {{ article.date|date('d/m/Y') }}</i>
-
-    <div class='well'>
-        {{ article.content }}
-    </div> {# div.well #}
-
-    <p>
-        <a href="{{ path('sdzblog_index') }}" class='btn'>
-            <i class='icon-chevron-left'></i>
-            Back to the list
-        </a>
-        <a href="{{ path('sdzblog_modify', {'id': article.id}) }}" class='btn'>
-            <i class='icon-edit'></i>
-            Edit this article
-        </a>
-        <a href="{{ path('sdzblog_delete', {'id': article.id}) }}" class='btn'>
-            <i class='icon-trash'></i>
-            Delete this article
-        </a>
-    </p>
-
+  <h2>
+    {# We check that an image is set to the article #}
+    {% if article.image %}
+      <img src="{{ article.image.url }}" alt="{{ article.image.alt }}" />
+    {% endif %}
+    {{ article.title }}
+  </h2>
+  <i>By {{ article.author }}, the {{ article.date|date('d/m/Y') }}</i>
+  {% if article.categories.count > 0 %}
+    - Catégories :
+    {% for categorie in article.categories %}
+      {{ categorie.nom }}
+      {% if not loop.last %} - {% endif %}
+    {% endfor %}
+  {% endif %}
+  <div class='well'>
+    {{ article.content }}
+  </div>
+  <p>
+    <a href="{{ path('sdzblog_index') }}" class='btn'>
+      <i class='icon-chevron-left'></i>
+      Back to the list
+    </a>
+    <a href="{{ path('sdzblog_modify', {'id': article.id}) }}" class='btn'>
+      <i class='icon-edit'></i>
+        Edit this article
+    </a>
+    <a href="{{ path('sdzblog_delete', {'id': article.id}) }}" class='btn'>
+      <i class='icon-trash'></i>
+      Delete this article
+    </a>
+  </p>
 {% endblock %}

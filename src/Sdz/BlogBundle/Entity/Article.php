@@ -54,11 +54,21 @@ class Article
      */
     private $publication;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Sdz\BlogBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
 
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->publication = true;
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -184,5 +194,61 @@ class Article
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Sdz\BlogBundle\Entity\Image $image
+     * @return Article
+     */
+    public function setImage(\Sdz\BlogBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Sdz\BlogBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \Sdz\BlogBundle\Entity\Category $categories
+     * @return Article
+     */
+    public function addCategorie(\Sdz\BlogBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Sdz\BlogBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Sdz\BlogBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

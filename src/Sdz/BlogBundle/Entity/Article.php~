@@ -54,6 +54,15 @@ class Article
      */
     private $publication;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Sdz\BlogBundle\Entity\Category", cascade={"persist"})
+     */
+    private $categories;
 
     public function __construct()
     {
@@ -161,5 +170,51 @@ class Article
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param boolean $publication
+     * @return Article
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
+    
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return boolean 
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Sdz\BlogBundle\Entity\Image $image
+     * @return Article
+     */
+    public function setImage(\Sdz\BlogBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Sdz\BlogBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

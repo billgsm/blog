@@ -5,6 +5,7 @@ namespace Sdz\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sdz\BlogBundle\Entity\Article;
+use Sdz\BlogBundle\Entity\Image;
 
 class BlogController extends Controller
 {
@@ -85,10 +86,19 @@ class BlogController extends Controller
 
     public function addAction()
     {
+        // Creation of Article entity
         $article = new Article();
         $article->setTitle('Mon dernier weekend');
-        $article->setAuthor('Bibi');
         $article->setContent("it was really cool and we had fun.");
+        $article->setAuthor('Bibi');
+
+        // Creation of Image entity
+        $image = new Image();
+        $image->setUrl('http://uploads.siteduzero.com/icones/478001_479000/478657.png');
+        $image->setAlt('Symfony2 logo');
+
+        // Link the image to the article
+        $article->setImage($image);
 
         // Get the EntityManager
         $em = $this->getDoctrine()->getManager();
@@ -108,24 +118,52 @@ class BlogController extends Controller
 
     public function modifyAction($id)
     {
-        $article = array(
-          'id'      => 3,
-          'title'   => 'revenus up',
-          'author'  => 'winzou',
-          'content' => '+500% over a year',
-          'date'    => new \Datetime(),
-        );
-        return $this->render('SdzBlogBundle:Blog:modify.html.twig', array(
-          'article' => $article,
-        ));
+        $em = $this->getDoctrine()
+                   ->getManager();
+
+        $article = $em->getRepository('SdzBlogBundle:Article')
+                      ->find($id);
+
+        if ($article === null) {
+            throw $this->createNotFoundException('Article [id='.$id.'] not found.');
+        }
+
+        $categoies_list = $em->getRepository('SdzBlogBundle:Category')
+                             ->findAll();
+
+        foreach($categories_list as $category)
+        {
+            $article->addCategory($category);
+        }
+
+        $em->flush();
+
+        return new Response('OK');
     }
 
     public function deleteAction($id)
     {
-      return $this->render('SdzBlogBundle:Blog:delete.html.twig', array(
-        'id' => $id,
-        'name' => '<h2>bilel</h2>',
-        ));
+        $em = $this->getDoctrine()
+                   ->getManager();
+
+        $article = $em->getRepository('SdzBlogBundle:Article')
+                      ->find($id);
+
+        if ($article === null) {
+            throw $this->createNotFoundException('Article [id='.$id.'] not found');
+        }
+
+        $categories_list = $em->getRepository('SdzBlogBundle:Category')
+                              ->findAll();
+
+        foreach($categoies_list as $category)
+        {
+            $article->removeCategoy($category);
+        }
+
+        $em->flush();
+
+        return new Response('OK');
     }
 
     public function menuAction()

@@ -2,9 +2,9 @@
 
 {% extends "SdzBlogBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - article reading{% endblock %}
-
-
+{% block title %}
+    {{ parent() }} - article reading
+{% endblock %}
 
 {% block sdzblog_body %}
 
@@ -13,9 +13,11 @@
     {% if article.image %}
       <img src="{{ article.image.url }}" alt="{{ article.image.alt }}" />
     {% endif %}
+
     {{ article.title }}
   </h2>
   <i>By {{ article.author }}, the {{ article.date|date('d/m/Y') }}</i>
+
   {% if article.categories.count > 0 %}
     - Catégories :
     {% for categorie in article.categories %}
@@ -23,9 +25,21 @@
       {% if not loop.last %} - {% endif %}
     {% endfor %}
   {% endif %}
+
   <div class='well'>
     {{ article.content }}
   </div>
+
+  {% if articleSkill_list|length > 0 %}
+    <div>Used skills in this article:
+        <ul>
+          {% for articleSkill in articleSkill_list %}
+              <li>{{ articleSkill.skill.name }} : {{ articleSkill.level }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+  {% endif %}
+
   <p>
     <a href="{{ path('sdzblog_index') }}" class='btn'>
       <i class='icon-chevron-left'></i>

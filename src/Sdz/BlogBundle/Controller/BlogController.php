@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sdz\BlogBundle\Entity\Article;
 use Sdz\BlogBundle\Entity\Image;
+use Sdz\BlogBundle\Entity\ArticleSkill;
 
 class BlogController extends Controller
 {
@@ -70,17 +71,23 @@ class BlogController extends Controller
 
         //$request = $this->getRequest();
         
-        $repository = $this->getDoctrine()
-                           ->getManager()
-                           ->getRepository('SdzBlogBundle:Article');
+        $em = $this->getDoctrine()
+                   ->getManager();
+                           
+        $repository = $em->getRepository('SdzBlogBundle:Article');
 
         $article = $repository->find($id);
+
         if( $article === null ) {
             throw $this->createNotFoundException('Article[id='.$id.'] does not exist.');
         }
 
+        $articleSkill_list = $em->getRepository('SdzBlogBundle:ArticleSkill')
+                                ->findByArticle($article->getId());
+
         return $this->render('SdzBlogBundle:Blog:see.html.twig', array(
           'article' => $article,
+          'articleSkill_list' => $articleSkill_list,
         ));
     }
 
@@ -107,6 +114,22 @@ class BlogController extends Controller
         $em->persist($article);
 
         // Flush all what has been persisted before
+        $em->flush();
+
+        $skills_list = $em->getRepository('SdzBlogBundle:Skill')
+                          ->findAll();
+
+        foreach($skills_list as $i => $skill)
+        {
+            $skillArticle[$i] = new ArticleSkill;
+
+            $skillArticle[$i]->setArticle($article);
+            $skillArticle[$i]->setSkill($skill);
+            $skillArticle[$i]->setLevel('Expert');
+
+            $em->persist($skillArticle[$i]);
+        }
+
         $em->flush();
 
         if ($this->getRequest()->getMethod() == "POST") {

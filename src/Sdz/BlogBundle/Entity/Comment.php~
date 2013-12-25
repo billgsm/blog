@@ -131,27 +131,4 @@ class Comment
     {
         return $this->date;
     }
-
-    /**
-     * Set article
-     *
-     * @param \Sdz\BlogBundle\Entity\Article $article
-     * @return Comment
-     */
-    public function setArticle(\Sdz\BlogBundle\Entity\Article $article)
-    {
-        $this->article = $article;
-    
-        return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return \Sdz\BlogBundle\Entity\Article 
-     */
-    public function getArticle()
-    {
-        return $this->article;
-    }
 }

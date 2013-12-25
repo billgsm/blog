@@ -4,6 +4,7 @@ namespace Sdz\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+
 use Sdz\BlogBundle\Entity\Article;
 use Sdz\BlogBundle\Entity\Image;
 use Sdz\BlogBundle\Entity\ArticleSkill;
@@ -21,7 +22,7 @@ class BlogController extends Controller
       if( $page < 1) {
         throw $this->createNotFoundException('Page not found (page = '.$page.')');
       }
-      
+
       $articles = array(
         array(
           'id'      => 1,
@@ -70,10 +71,10 @@ class BlogController extends Controller
         //FIN-------------------
 
         //$request = $this->getRequest();
-        
+
         $em = $this->getDoctrine()
                    ->getManager();
-                           
+
         $repository = $em->getRepository('SdzBlogBundle:Article');
 
         $article = $repository->find($id);

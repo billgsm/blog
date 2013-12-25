@@ -64,11 +64,17 @@ class Article
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\Comment", mappedBy="article")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->publication = true;
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -250,5 +256,38 @@ class Article
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Sdz\BlogBundle\Entity\Comment $comments
+     * @return Article
+     */
+    public function addComment(\Sdz\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+        $comments->setArticle($this); 
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Sdz\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Sdz\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

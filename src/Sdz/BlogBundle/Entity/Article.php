@@ -29,6 +29,13 @@ class Article
     private $date;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="edition_date", type="datetime")
+     */
+    private $edition_date;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -80,7 +87,7 @@ class Article
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,14 +103,14 @@ class Article
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -119,14 +126,14 @@ class Article
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -142,14 +149,14 @@ class Article
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -165,14 +172,14 @@ class Article
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -188,14 +195,14 @@ class Article
     public function setPublication($publication)
     {
         $this->publication = $publication;
-    
+
         return $this;
     }
 
     /**
      * Get publication
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublication()
     {
@@ -211,14 +218,14 @@ class Article
     public function setImage(\Sdz\BlogBundle\Entity\Image $image = null)
     {
         $this->image = $image;
-    
+
         return $this;
     }
 
     /**
      * Get image
      *
-     * @return \Sdz\BlogBundle\Entity\Image 
+     * @return \Sdz\BlogBundle\Entity\Image
      */
     public function getImage()
     {
@@ -234,7 +241,7 @@ class Article
     public function addCategorie(\Sdz\BlogBundle\Entity\Category $categories)
     {
         $this->categories[] = $categories;
-    
+
         return $this;
     }
 
@@ -251,7 +258,7 @@ class Article
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
@@ -267,7 +274,7 @@ class Article
     public function addComment(\Sdz\BlogBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-        $comments->setArticle($this); 
+        $comments->setArticle($this);
         return $this;
     }
 
@@ -284,10 +291,33 @@ class Article
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set edition_date
+     *
+     * @param \DateTime $editionDate
+     * @return Article
+     */
+    public function setEditionDate($editionDate)
+    {
+        $this->edition_date = $editionDate;
+
+        return $this;
+    }
+
+    /**
+     * Get edition_date
+     *
+     * @return \DateTime
+     */
+    public function getEditionDate()
+    {
+        return $this->edition_date;
     }
 }

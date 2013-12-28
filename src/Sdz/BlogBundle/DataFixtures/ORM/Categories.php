@@ -9,7 +9,16 @@ class Categories implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $names = array('Symfony2', 'Doctrine', 'Tutorial', 'Event');
+        $names = array(
+            'Symfony2',
+            'Doctrine',
+            'Tutorial',
+            'Event',
+            'Django',
+            'Python',
+            'Celery',
+            'Scrapy',
+            'Web');
 
         foreach($names as $i => $name)
         {

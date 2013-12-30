@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="sdz_article")
  * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\ArticleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Article
 {
@@ -32,7 +33,7 @@ class Article
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="edition_date", type="datetime")
+     * @ORM\Column(name="edition_date", type="datetime", nullable=true)
      */
     private $edition_date;
 
@@ -63,7 +64,7 @@ class Article
     private $publication;
 
     /**
-     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
 

@@ -3,6 +3,7 @@
 namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * ArticleRepository
@@ -21,5 +22,21 @@ class ArticleRepository extends EntityRepository
 
         return $qb->getQuery()
                   ->getResult();
+    }
+
+    public function getArticles($numberPerPage, $page)
+    {
+        $query = $this->createQueryBuilder('a')
+                      ->leftJoin('a.image', 'i')
+                      ->addSelect('c')
+                      ->leftJoin('a.comments', 'c')
+                      ->addSelect('c')
+                      ->orderBy('a.date', 'DESC')
+                      ->getQuery();
+
+        $query->setFirstResult(( $page-1) * $numberPerPage)
+              ->setMaxResults($numberPerPage);
+
+        return new Paginator($query);
     }
 }

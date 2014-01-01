@@ -46,29 +46,51 @@ class BlogController extends Controller
 
     public function addAction()
     {
-        if ($this->getRequest()->getMethod() == "POST") {
+        $article = new Article();
+        $form = $this->createFormBuilder($article)
+                     ->add('date', 'date')
+                     ->add('title', 'text')
+                     ->add('content', 'textarea')
+                     ->add('author', 'text')
+                     ->add('publication', 'checkbox', array('required' => false))
+                     ->getForm();
 
-            $this->get('session')->getFlashBag()->add('info', 'Article has been saved');
+        $request = $this->getRequest();
 
-            return $this->redirect( $this->generateUrl('sdzblog_see', array('id' => $article->getId())) );
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('sdzblog_see', array(
+                    'id' => $article->getId()
+                )));
+            }
         }
 
-        return $this->render('SdzBlogBundle:Blog:add.html.twig');
+        return $this->render('SdzBlogBundle:Blog:add.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function modifyAction($id)
     {
-        $em = $this->getDoctrine()
-                   ->getManager();
+        $article = $this->getDoctrine()
+                        ->getRepository('Sdz\BlogBundle\Entity\Article')
+                        ->find($id);
 
-        $article = $em->getRepository('SdzBlogBundle:Article')
-                      ->find($id);
+        $formBuilder = $this->createFormBuilder($article)
+                            ->add('title', 'text')
+                            ->add('content', 'textarea')
+                            ->add('author', 'text')
+                            ->getForm();
 
-        if ($article === null) {
-            throw $this->createNotFoundException('Article [id='.$id.'] not found.');
-        }
 
         return $this->render('SdzBlogBundle:Blog:modify.html.twig', array(
+            'form' => $formBuilder->createView(),
             'article' => $article,
         ));
     }

@@ -8,7 +8,7 @@
   {% endif %}
 
   {% if accueil %}
-    <a href="{{ path('sdzblog_voir', {'id': article.id} ) }}">{{ article.title }}</a>
+    <a href="{{ path('sdzblog_see', {'id': article.id} ) }}">{{ article.title }}</a>
   {% else %}
     {{ article.title }}
   {% endif %}

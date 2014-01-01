@@ -8,37 +8,7 @@
 
 {% block sdzblog_body %}
 
-  <h2>
-    {# We check that an image is set to the article #}
-    {% if article.image %}
-      <img src="{{ article.image.url }}" alt="{{ article.image.alt }}" />
-    {% endif %}
-
-    {{ article.title }}
-  </h2>
-  <i>By {{ article.author }}, the {{ article.date|date('d/m/Y') }}</i>
-
-  {% if article.categories.count > 0 %}
-    - Catégories :
-    {% for categorie in article.categories %}
-      {{ categorie.nom }}
-      {% if not loop.last %} - {% endif %}
-    {% endfor %}
-  {% endif %}
-
-  <div class='well'>
-    {{ article.content }}
-  </div>
-
-  {% if articleSkill_list|length > 0 %}
-    <div>Used skills in this article:
-        <ul>
-          {% for articleSkill in articleSkill_list %}
-              <li>{{ articleSkill.skill.name }} : {{ articleSkill.level }}</li>
-          {% endfor %}
-        </ul>
-    </div>
-  {% endif %}
+  {% include "SdzBlogBundle:Blog:article.html.twig" %}
 
   <p>
     <a href="{{ path('sdzblog_index') }}" class='btn'>
@@ -54,4 +24,5 @@
       Delete this article
     </a>
   </p>
+
 {% endblock %}

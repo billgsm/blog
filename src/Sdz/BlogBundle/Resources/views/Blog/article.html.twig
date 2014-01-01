@@ -1,0 +1,32 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/article.html.twig #}
+
+{% set accueil = accueil|default(false) %}
+
+<h2>
+  {% if article.image is not null %}
+    <img src="{{ asset(article.image.url) }}" alt="{{ article.image.alt }}" />
+  {% endif %}
+
+  {% if accueil %}
+    <a href="{{ path('sdzblog_voir', {'id': article.id} ) }}">{{ article.title }}</a>
+  {% else %}
+    {{ article.title }}
+  {% endif %}
+</h2>
+
+<i>Le {{ article.date|date('d/m/Y') }}, par {{ article.author }}.</i>
+
+<div class="well">
+  {{ article.content }}
+</div>
+
+{% if article.categories.count > 0 %}
+  <div class="well well-small">
+    <p><i>
+      Category:
+      {% for category in article.categories %}
+        {{ category.name }}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </i></p>
+  </div>
+{% endif %}

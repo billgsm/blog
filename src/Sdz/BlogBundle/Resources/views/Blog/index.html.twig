@@ -9,11 +9,8 @@
     <h2>Article list</h2>
     <ul>
         {% for article in articles %}
-            <li>
-                <a href="{{ path('sdzblog_see', {'id': article.id}) }}">{{ article.title }}</a>
-                by {{ article.author }},
-                in {{ article.date|date('d/m/Y') }}
-            </li>
+            {% include "SdzBlogBundle:Blog:article.html.twig" with {'accueil': true} %}
+            <hr />
         {% else %}
             <li>No articles</li>
         {% endfor %}

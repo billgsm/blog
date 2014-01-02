@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sdz\BlogBundle\Entity\Article;
 use Sdz\BlogBundle\Entity\Image;
 use Sdz\BlogBundle\Entity\ArticleSkill;
+use Sdz\BlogBundle\Form\ArticleType;
 
 class BlogController extends Controller
 {
@@ -46,14 +47,8 @@ class BlogController extends Controller
 
     public function addAction()
     {
-        $article = new Article();
-        $form = $this->createFormBuilder($article)
-                     ->add('date', 'date')
-                     ->add('title', 'text')
-                     ->add('content', 'textarea')
-                     ->add('author', 'text')
-                     ->add('publication', 'checkbox', array('required' => false))
-                     ->getForm();
+        $article = new Article;
+        $form = $this->createForm(new ArticleType, $article);
 
         $request = $this->getRequest();
 
@@ -95,27 +90,22 @@ class BlogController extends Controller
         ));
     }
 
-    public function deleteAction($id)
+    public function deleteAction(Article $article)
     {
+       /* if ($article === null) {
+            throw $this->createNotFoundException('Article [id='.$id.'] not found');
+           }*/
+
         $em = $this->getDoctrine()
                    ->getManager();
 
-        $article = $em->getRepository('SdzBlogBundle:Article')
-                      ->find($id);
+        //$article = $em->getRepository('SdzBlogBundle:Article')
+        //              ->find($id);
 
-        if ($article === null) {
-            throw $this->createNotFoundException('Article [id='.$id.'] not found');
-        }
+        $em->remove($article);
+        $em->flush();
 
-        if ($this->get('request')->getMethod() == 'POST') {
-            $this->get('session')->getFlashBag()->add('info', 'Article deleted');
-
-            return $this->redirect( $this->generateUrl('sdzblog_accueil') );
-        }
-
-        return $this->render('SdzBlogBundle:Blog:delete.html.twig', array(
-            'article' => $article,
-        ));
+        return $this->redirect( $this->generateUrl('sdzblog_index') );
     }
 
     public function menuAction($number)

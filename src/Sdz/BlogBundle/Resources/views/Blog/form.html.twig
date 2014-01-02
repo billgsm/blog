@@ -3,8 +3,25 @@
 <h3>Form of the article</h3>
 
 <div class="well">
-  <form method="POST" {{ form_enctype(form) }}>
-      {{ form_widget(form) }}
-      <input class="btn btn-primary" type="submit" />
-  </form>
+    <form method="POST" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <div>
+          {{ form_label(form.title, "Article title") }}
+
+          {{ form_errors(form.title) }}
+
+          {{ form_widget(form.title) }}
+        </div>
+
+        <div>
+          {{ form_label(form.content, "Article content") }}
+          {{ form_errors(form.content) }}
+          {{ form_widget(form.content) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <input class="btn btn-primary" type="submit" />
+    </form>
 </div>
